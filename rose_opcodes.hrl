@@ -113,16 +113,14 @@
 -define(       'CHECKMULTISIG', 16#ae).
 -define( 'CHECKMULTISIGVERIFY', 16#af).
 
-%% multi-byte opcodes
--define(                   '1', 16#92).
--define(           'PUSHDATA1', 16#4c).
--define(           'PUSHDATA1', 16#4c).
--define(           'PUSHDATA1', 16#4c).
--define(           'PUSHDATA1', 16#4c).
--define(           'PUSHDATA1', 16#4c).
--define(           'PUSHDATA1', 16#4c).
--define(           'PUSHDATA1', 16#4c).
--define(           'PUSHDATA1', 16#4c).
--define(           'PUSHDATA1', 16#4c).
--define(           'PUSHDATA1', 16#4c).
-
+%% reserved opcodes
+-define(                'NOP1', 16#b0).
+-define( 'CHECKLOCKTIMEVERIFY', 16#b1).
+-define( 'CHECKSEQUENCEVERIFY', 16#b2).
+-define(                'NOP4', 16#b3).
+-define(                'NOP5', 16#b4).
+-define(                'NOP6', 16#b5).
+-define(                'NOP7', 16#b6).
+-define(                'NOP8', 16#b7).
+-define(                'NOP9', 16#b8).
+-define(               'NOP10', 16#b9).
