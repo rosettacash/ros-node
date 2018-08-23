@@ -81,7 +81,54 @@ eval_code(Op, Script, {S, AS}) ->
         ?'2ROT' ->
             [H1, H2, H3, H4, H5, H6|S1] = S,
             { Script, {[H5, H6, H1, H2, H3, H4|S1], AS} };
-
+        ?'2SWAP' ->
+            [H1, H2, H3, H4|S1] = S,
+            { Script, {[H3, H4, H1, H2|S1], AS} };
+        ?IFDUP ->
+            [H|_] = S,
+            case H of
+                0 ->
+                    { Script, {S, AS} };
+                _ ->
+                    { Script, {[H|S], AS} }
+            end;
+        ?DEPTH ->
+            Size = length(S),
+            { Script, {[Size|S], AS} };
+        ?DROP ->
+            [_|S1] = S,
+            { Script, {S1, AS} };
+        ?DUP ->
+            [H|_] = S,
+            { Script, {[H|S], AS} };
+        ?NIP ->
+            [H, _|S1] = S,
+            { Script, {[H|S1], AS} };
+        ?OVER ->
+            [_, H|_] = S,
+            { Script, {[H|S], AS} };
+        %% (xn ... x2 x1 x0 n - xn ... x2 x1 x0 xn)
+        ?PICK ->
+            [N|NewScript] = Script,
+            ;
+        %% (xn ... x2 x1 x0 n - ... x2 x1 x0 xn)
+        ?ROLL ->
+            [N|NewScript] = Script,
+            ;
+        %% (x1 x2 x3 -- x2 x3 x1)
+        %%  x2 x1 x3  after first swap
+        %%  x2 x3 x1  after second swap
+        ?ROT ->
+            [H1, H2, H3|S1] = S,
+            { Script, {[H3, H1, H2|S1], AS} };
+        %% (x1 x2 -- x2 x1)
+        ?SWAP ->
+            [H1, H2|S1] = S,
+            { Script, {[H2, H1|S1], AS} };
+        %% (x1 x2 -- x2 x1 x2)
+        ?TUCK ->
+            [H1, H2|S1] = S,
+            { Script, {[H1, H2, H1|S1], AS} };
 
 
     end.
